@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:include="common.html :: source"></th:block>
+</head>
+<body>
+
+<th:block th:include="common.html :: header"></th:block>
+
+<div class="i_bg bg_color">
+    <div class="m_content">
+
+        <div class="m_left">
+            <div class="left_n">管理中心</div>
+            <div class="left_m">
+                <div class="left_m_t t_bg1">订单中心</div>
+                <ul>
+                    <li><a href="#" >我的订单</a></li>
+                </ul>
+            </div>
+            <div class="left_m">
+                <div class="left_m_t t_bg2">会员中心</div>
+                <ul>
+                    <li><a href="/user/userInfo" >用户信息</a></li>
+                    <li><a href="/userAddress/userAddressList" >地址管理</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="m_right" id="content">
+            <p></p>
+            <p></p>
+            <div class="mem_tit">订单列表</div>
+            <table border="0" class="order_tab"
+                   style="width: 930px; text-align: center; margin-bottom: 30px;"
+                   cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <td width="15%">收货人</td>
+                    <td width="15%">订单号</td>
+                    <td width="20%">地址</td>
+                    <td width="20%">下单时间</td>
+                    <td width="15%">总价</td>
+                    <td width="15%">详情</td>
+                </tr>
+                <div th:each="order:${myorder.records}">
+
+
+                    <tr class="td_bg">
+                        <td th:text="${order.loginName}">用户名:张三</td>
+                        <td th:text="${order.serialnumber}">订单号:1010101010</td>
+                        <td th:text="${order.userAddress}">地址:小寨</td>
+                        <td th:text="${order.updateTime}"></td>
+                        <td th:text="'￥'+${order.cost}">1000</td>
+                        <td><a th:href="@{/orderDetail/findDetail(serialnumber=${order.serialnumber})}">详情</a> </td>
+
+                    </tr>
+                    <!--<tr>
+                        <td colspan="4">
+                            <table border="0" class="order_tab"
+                                   style="width: 930px; text-align: center; margin-bottom: 30px;"
+                                   cellspacing="0" cellpadding="0">
+                                <tbody>
+                                <tr>
+                                    <td width="20%">商品名称</td>
+                                    <td width="20%">商品图片</td>
+                                    <td width="25%">数量</td>
+                                    <td width="25%">单价</td>
+                                    <td width="25%">总价</td>
+                                </tr>
+
+                                <tr>
+                                    <td>商品</td>
+                                    <td>
+                                        <img src="/images/c_4.jpg" width="50"
+                                             height="50">
+                                    </td>
+                                    <td>1</td>
+                                    <td>6000</td>
+                                    <td>10000</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>-->
+                </div>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                当前<span th:text="${myorder.current}"></span>页,
+                总<span th:text="${myorder.pages}"></span>页,
+                共<span th:text="${myorder.total}"></span>条记录
+
+
+                <a style="color:darkorange ;background: #B2CFED;" th:href="@{/user/orderList}">首页</a>
+                <span th:if="${myorder.current gt 1}">
+                    <a style="color:darkorange ;background: #B2CFED;" th:href="@{/user/orderList(currentPage = ${myorder.current}-1)}">上一页</a>
+                </span>
+                <span th:if="${myorder.current} lt ${myorder.pages}">
+                    <a style="color:darkorange ;background: #B2CFED;" th:href="@{/user/orderList(currentPage = ${myorder.current}+1)}">下一页</a>
+                </span>
+
+
+
+                <!--<th:if test="${pageInfo.hasNextPage }">
+                    <a style="color:darkorange ;background: #B2CFED;" href="${pageContext.request.contextPath}/admin/listProduct?pageNum=${pageInfo.pageNum+1}">下一页</a>
+                </th:if>-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="common.html :: footer"></th:block>
+<th:block th:include="common.html :: permit"></th:block>
+
+</body>
+</html>

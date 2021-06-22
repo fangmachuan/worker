@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:include="common.html :: source"></th:block>
+    <script type="text/javascript" src="/js/settlement.js"></script>
+</head>
+<body>
+
+<th:block th:include="common.html :: header"></th:block>
+
+<div class="i_bg">
+    <div id="settlement">
+
+        <div class="content mar_20">
+            <div class="two_bg">
+                <div class="two_t">
+                    购买商品列表
+                </div>
+                <table border="0" class="car_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="car_th" width="550">商品名称</td>
+                        <td class="car_th" width="150">购买数量</td>
+                        <td class="car_th" width="130">小计</td>
+                    </tr>
+
+                    <tr th:each="detail:${detailVOList}" >
+                        <td align="center">
+                            <div class="c_s_img">
+                                <img th:src="'/images/'+${detail.fileName}" width="73" height="73"/>
+                            </div>
+                            <div th:text="${detail.name}">手机</div>
+                        </td>
+                        <td align="center" th:text="${detail.quantity}">1</td>
+                        <td align="center" class="qprice" style="color:#ff4e00;" th:text="'￥'+${detail.cost}">￥3000</td>
+                    </tr>
+
+                </table>
+
+                <div class="two_t">
+                    <span class="fr"></span>收货人信息
+                </div>
+                <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="p_td" width="160">用户名称</td>
+                        <td width="395" th:text="${session.user.userName}">张三</td>
+                        <td class="p_td" >登录名称</td>
+                        <td th:text="${session.user.loginName}">zhangsan</td>
+                    </tr>
+                    <tr>
+                        <td class="p_td">手机</td>
+                        <td th:text="${session.user.mobile}">13678900987</td>
+                        <td class="p_td" width="160" >电子邮件</td>
+                        <td width="395" th:text="${session.user.email}">123@163.com</td>
+                    </tr>
+                </table>
+
+                    <table border="0" style="width:900px; margin-top:20px;" cellspacing="0" cellpadding="0">
+                        <h3>收货地址：</h3>
+                        <h2 style="color: red;font-size: 20px;" th:text="${detailVOList[0].address}"></h2>
+                        <tr height="70">
+
+                            <td align="right">
+                                <b style="font-size:14px;">应付款金额：<span id="totalprice" style="font-size:22px; color:#ff4e00;"></span></b>
+                                <input type="hidden" name="cost" id="settlement2_totalCost"/>
+                            </td>
+                        </tr>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="common.html :: footer"></th:block>
+<th:block th:include="common.html :: permit"></th:block>
+
+</body>
+</html>
